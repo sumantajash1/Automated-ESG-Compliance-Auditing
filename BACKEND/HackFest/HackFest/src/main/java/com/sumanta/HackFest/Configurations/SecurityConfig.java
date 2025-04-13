@@ -42,7 +42,8 @@ public class SecurityConfig {
                                                     "/Client/Login",
                                                     "/Supplier/SignUp",
                                                     "/Supplier/Login",
-                                                    "/Government/Login"
+                                                    "/Government/Login",
+                                                    "/Government/SignUp"
                         ).permitAll()
                         .requestMatchers("/Client/**").hasRole("CLIENT")
                         .requestMatchers("/Government/**").hasRole("GOVERNMENT")

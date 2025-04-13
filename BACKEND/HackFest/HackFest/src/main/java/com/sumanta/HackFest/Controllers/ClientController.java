@@ -33,7 +33,6 @@ public class ClientController {
         return service.SignIn(gstNumber, password);
     }
 
-
     @GetMapping("/getSuppliers")
     @PreAuthorize("hasRole('CLIENT')")
     public String getAllMySuppliers() {
