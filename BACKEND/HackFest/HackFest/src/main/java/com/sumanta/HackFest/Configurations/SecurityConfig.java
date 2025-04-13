@@ -5,6 +5,9 @@ import com.sumanta.HackFest.Utils.JwtTokenUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -15,6 +18,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 
 @Configuration
 @EnableWebSecurity
+@EnableMethodSecurity
 public class SecurityConfig {
     @Autowired
     private JwtRequestFilter filter;
@@ -25,17 +29,22 @@ public class SecurityConfig {
     }
 
     @Bean
+    public AuthenticationManager authenticationManager(AuthenticationConfiguration configuration) throws Exception {
+        return configuration.getAuthenticationManager();
+    }
+
+    @Bean
     public SecurityFilterChain filterchain (HttpSecurity security) throws Exception {
         security
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/Business/SignUp",
-                                                    "/Business/Login",
+                        .requestMatchers("/Client/SignUp",
+                                                    "/Client/Login",
                                                     "/Supplier/SignUp",
                                                     "/Supplier/Login",
                                                     "/Government/Login"
                         ).permitAll()
-                        .requestMatchers("/Business/**").hasRole("CLIENT")
+                        .requestMatchers("/Client/**").hasRole("CLIENT")
                         .requestMatchers("/Government/**").hasRole("GOVERNMENT")
                         .requestMatchers("/Supplier/**").hasRole("SUPPLIER")
                         .anyRequest().authenticated())

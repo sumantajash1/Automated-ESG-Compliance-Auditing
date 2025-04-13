@@ -19,18 +19,29 @@ public class ClientService {
 
     public String register(Client client) {
 
+        client.setPassword(passwordEncoder.encode(client.getPassword()));
         dao.save(client);
         return "Saved Successfully";
     }
 
-    public String SignIn(String gstNumber, String rawPassword, String role) {
+    public String SignIn(String gstNumber, String rawPassword) {
         var existing = dao.getByGstNumber(gstNumber);
         if(existing.isPresent()) {
             String encodedPassword = existing.get().getPassword();
             if(passwordEncoder.matches(rawPassword, encodedPassword)) {
-                return jwtTokenUtil.GenerateToken(gstNumber, Role.valueOf(role));
+                Role role = existing.get().getRole();
+                return jwtTokenUtil.GenerateToken(gstNumber, role);
             }
         }
         return "Invalid Credentials";
+    }
+
+    public boolean verifyGstNumber(String gstNumber) {
+        //maybe use a dummy data later
+        return true;
+    }
+
+    public boolean AlreadyExists(String gstNumber) {
+        return dao.existsById(gstNumber);
     }
 }
