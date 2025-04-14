@@ -1,7 +1,7 @@
 package com.sumanta.HackFest.Controllers;
 
 import com.sumanta.HackFest.Entities.Government;
-import com.sumanta.HackFest.Services.GovService;
+import com.sumanta.HackFest.Services.GovernmentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -12,9 +12,9 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/Government")
 @EnableMethodSecurity
-public class GovController {
+public class GovernmentController {
     @Autowired
-    GovService govService;
+    GovernmentService govService;
 
     @PostMapping("/SignUp")
     public String SignUp(@RequestBody Government government) {

@@ -4,10 +4,9 @@ import com.sumanta.HackFest.Entities.Government;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import javax.swing.text.html.Option;
 import java.util.Optional;
 
 @Repository
-public interface GovtDao extends JpaRepository<Government, String> {
+public interface GovernmenttDao extends JpaRepository<Government, String> {
     Optional<Government>getByEmployeeId(String employeeId);
 }

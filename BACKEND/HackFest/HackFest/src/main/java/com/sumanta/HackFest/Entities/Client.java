@@ -3,10 +3,14 @@ package com.sumanta.HackFest.Entities;
 
 import jakarta.persistence.*;
 
+import java.util.UUID;
+
 @Entity
 @Table(name = "clients")
 public class Client {
     @Id
+    @Column(name="clientId")
+    private String clientId;
     @Column(name = "gstnumber")
     private String gstNumber;
     @Column(name = "clientname")
@@ -25,12 +29,25 @@ public class Client {
     }
 
     public Client(String gstNumber, String clientName, String email, String contactNumber, String password, Role role) {
+        this.clientId = GenerateClientId();
         this.gstNumber = gstNumber;
         this.clientName = clientName;
         this.email = email;
         this.contactNumber = contactNumber;
         this.password = password;
         this.role = role;
+    }
+
+    private String GenerateClientId() {
+        return "EID-" + UUID.randomUUID().toString().substring(0, 8).toUpperCase();
+    }
+
+    public String getClientId() {
+        return clientId;
+    }
+
+    public void setClientId(String clientId) {
+        this.clientId = clientId;
     }
 
     public String getGstNumber() {
@@ -83,8 +100,9 @@ public class Client {
 
     @Override
     public String toString() {
-        return "Business{" +
-                "gstNumber='" + gstNumber + '\'' +
+        return "Client{" +
+                "clientId='" + clientId + '\'' +
+                ", gstNumber='" + gstNumber + '\'' +
                 ", clientName='" + clientName + '\'' +
                 ", email='" + email + '\'' +
                 ", contactNumber='" + contactNumber + '\'' +

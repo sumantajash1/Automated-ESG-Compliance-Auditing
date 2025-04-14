@@ -36,10 +36,6 @@ public class ClientService {
         return "Invalid Credentials";
     }
 
-    public boolean verifyGstNumber(String gstNumber) {
-        //maybe use a dummy data later
-        return true;
-    }
 
     public boolean AlreadyExists(String gstNumber) {
         return dao.existsById(gstNumber);

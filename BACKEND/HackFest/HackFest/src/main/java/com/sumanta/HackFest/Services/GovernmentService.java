@@ -1,16 +1,16 @@
 package com.sumanta.HackFest.Services;
 
 import com.sumanta.HackFest.Entities.Government;
-import com.sumanta.HackFest.Repositories.GovtDao;
+import com.sumanta.HackFest.Repositories.GovernmenttDao;
 import com.sumanta.HackFest.Utils.JwtTokenUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
-public class GovService {
+public class GovernmentService {
     @Autowired
-    GovtDao dao;
+    GovernmenttDao dao;
     @Autowired
     PasswordEncoder passwordEncoder;
     @Autowired
