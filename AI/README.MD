@@ -103,4 +103,26 @@ end_year: <end_year>
 
 ### Response
 
-After making the request, the result will be sent to your specified `callback_url` via a POST request once processing is complete.
+After making the request, the result will be sent to your specified `callback_url` via a POST request once processing is complete. All area in square meter.
+
+```json
+{
+  "total_area_m2": 322296.2895344203,
+  "deforestation_results": [
+    {
+      "Initial_forest_area_m2": 293054.5244810518,
+      "area_lost_meter_square": 2674.1388763726927,
+      "deforestation_detected": true,
+      "percentage_loss": 0.9125055759190629,
+      "time_period": "2021-2022"
+    },
+    {
+      "Initial_forest_area_m2": 295371.1028354422,
+      "area_lost_meter_square": 0,
+      "deforestation_detected": false,
+      "percentage_loss": 0,
+      "time_period": "2022-2023"
+    }
+  ]
+}
+```
