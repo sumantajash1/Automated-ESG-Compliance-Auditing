@@ -8,4 +8,5 @@ import java.util.Optional;
 
 public interface SupplierDao extends JpaRepository<Supplier, String> {
     public Optional<Supplier> getByGstNumber(String gstNumber);
+    public Boolean existsByGstNumber(String gstNumber);
 }

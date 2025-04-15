@@ -9,4 +9,8 @@ import java.util.Optional;
 @Repository
 public interface ClientDao extends JpaRepository<Client, String> {
     public Optional<Client> getByGstNumber(String gstNumber);
+
+    public Optional<Client> getByClientId(String ClientId);
+
+    public boolean existsByGstNumber(String gstNumber);
 }

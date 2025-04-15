@@ -1,14 +1,17 @@
 package com.sumanta.HackFest.Controllers;
 
+import com.sumanta.HackFest.Entities.Client;
 import com.sumanta.HackFest.Entities.Supplier;
+import com.sumanta.HackFest.Repositories.ClientDao;
+import com.sumanta.HackFest.Services.ClientService;
 import com.sumanta.HackFest.Services.GstService;
 import com.sumanta.HackFest.Services.SupplierService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @EnableMethodSecurity
@@ -19,12 +22,14 @@ public class SupplierController {
     @Autowired
     GstService gstService;
 
+
     @PostMapping("/SignUp")
     public String SignUp(@RequestBody Supplier supplier) {
-
-        if(gstService.VerifyGstNumber(supplier.getGstNumber())) {
-            //method in service for checking if already exists
-            //supplier.setRole();
+        String gstNumber = supplier.getGstNumber();
+        if(gstService.VerifyGstNumber(gstNumber)) {
+            if(supplierService.alreadyExists(gstNumber)) {
+                return "Supplier Already Registered";
+            }
             return supplierService.register(supplier);
         }
         return "idk";
@@ -34,4 +39,11 @@ public class SupplierController {
     public String Login(@RequestBody Supplier supplier) {
         return supplierService.SignIn(supplier);
     }
+
+    @GetMapping("/getAllClients")
+    @PreAuthorize("hasRole('SUPPLIER')")
+    public List<Client> getAllClients() {
+        return supplierService.getAllClients();
+    }
+
 }

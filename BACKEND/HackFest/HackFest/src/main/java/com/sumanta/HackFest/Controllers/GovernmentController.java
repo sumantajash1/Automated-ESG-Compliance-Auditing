@@ -1,13 +1,15 @@
 package com.sumanta.HackFest.Controllers;
 
+import com.sumanta.HackFest.Entities.Client;
 import com.sumanta.HackFest.Entities.Government;
+import com.sumanta.HackFest.Entities.Supplier;
 import com.sumanta.HackFest.Services.GovernmentService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/Government")
@@ -27,5 +29,17 @@ public class GovernmentController {
             return govService.SignIn(government);
         }
         return "idk";
+    }
+
+    @GetMapping("/getAllSuppliers")
+    @PreAuthorize("hasRole('GOVERNMENT')")
+    public List<Supplier> GetAllSuppliers() {
+        return govService.getAllSuppliers();
+    }
+
+    @GetMapping("/getAllClients")
+    @PreAuthorize("hasRole('GOVERNMENT')")
+    public List<Client> getAllClients() {
+        return govService.getAllClients();
     }
 }
