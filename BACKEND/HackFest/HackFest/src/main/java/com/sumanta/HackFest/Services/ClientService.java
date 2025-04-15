@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.UUID;
+
 @Service
 public class ClientService {
     @Autowired
@@ -18,8 +20,9 @@ public class ClientService {
     JwtTokenUtil jwtTokenUtil;
 
     public String register(Client client) {
-
+        //System.out.println(client);
         client.setPassword(passwordEncoder.encode(client.getPassword()));
+        client.setClientId(GenerateClientId());
         dao.save(client);
         return "Saved Successfully";
     }
@@ -36,6 +39,9 @@ public class ClientService {
         return "Invalid Credentials";
     }
 
+    private String GenerateClientId() {
+        return "EID-" + UUID.randomUUID().toString().substring(0, 8).toUpperCase();
+    }
 
     public boolean AlreadyExists(String gstNumber) {
         return dao.existsById(gstNumber);

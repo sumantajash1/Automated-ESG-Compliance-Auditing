@@ -24,7 +24,6 @@ public class JwtTokenUtil {
         SECRET_KEY = Keys.hmacShaKeyFor(secret.getBytes());
     }
 
-
     public String GenerateToken(String userId, Role role) {
         return builder().
                 setSubject(userId) // user can be govt, supplier, or client
@@ -68,6 +67,5 @@ public class JwtTokenUtil {
         } catch (Exception e) {
             return false;
         }
-
     }
 }

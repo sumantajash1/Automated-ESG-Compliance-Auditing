@@ -9,7 +9,7 @@ import java.util.UUID;
 @Table(name = "clients")
 public class Client {
     @Id
-    @Column(name="clientId")
+    @Column(name="clientid")
     private String clientId;
     @Column(name = "gstnumber")
     private String gstNumber;
@@ -28,8 +28,9 @@ public class Client {
     public Client() {
     }
 
-    public Client(String gstNumber, String clientName, String email, String contactNumber, String password, Role role) {
-        this.clientId = GenerateClientId();
+    public Client(String ClientId, String gstNumber, String clientName, String email, String contactNumber, String password, Role role) {
+        //ClientId = GenerateClientId();
+        this.clientId = ClientId;
         this.gstNumber = gstNumber;
         this.clientName = clientName;
         this.email = email;
@@ -38,9 +39,9 @@ public class Client {
         this.role = role;
     }
 
-    private String GenerateClientId() {
-        return "EID-" + UUID.randomUUID().toString().substring(0, 8).toUpperCase();
-    }
+//    private String GenerateClientId() {
+//        return "EID-" + UUID.randomUUID().toString().substring(0, 8).toUpperCase();
+//    }
 
     public String getClientId() {
         return clientId;
