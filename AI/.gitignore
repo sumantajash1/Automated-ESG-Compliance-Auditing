@@ -1,0 +1,35 @@
+# Python bytecode files
+*.pyc
+*.pyo
+__pycache__/
+
+# Virtual environment
+venv/
+env/
+
+# FastAPI and ASGI logs
+*.log
+
+# Pytest cache
+.pytest_cache/
+
+# MySQL or SQLite database files (if you're using them)
+*.sqlite3
+
+# Environment variables file
+.env
+
+# IDE or editor specific files (e.g., VS Code, PyCharm)
+.vscode/
+.idea/
+
+# Temporary files
+*.swp
+*.swo
+
+# Jupyter Notebook checkpoints
+.ipynb_checkpoints/
+
+# OS-specific files (e.g., macOS, Windows)
+.DS_Store
+Thumbs.db
