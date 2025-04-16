@@ -31,6 +31,8 @@ public class GovernmentController {
         return "idk";
     }
 
+    //Somehow these are working now :)
+
     @GetMapping("/getAllSuppliers")
     @PreAuthorize("hasRole('GOVERNMENT')")
     public List<Supplier> GetAllSuppliers() {
