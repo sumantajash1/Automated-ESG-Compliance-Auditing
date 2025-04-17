@@ -4,6 +4,7 @@ import com.sumanta.HackFest.Entities.Role;
 import com.sumanta.HackFest.Utils.JwtTokenUtil;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,25 +26,38 @@ public class JwtRequestFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterchain) throws IOException, ServletException {
         final String header = request.getHeader("Authorization");
-        if(header!=null && header.startsWith("Bearer ")) {
-            String token = header.substring(7);
-            if(jwtTokenUtil.validateToken(token)) {
-                String userId = jwtTokenUtil.getIdFromToken(token);
-                Role role = jwtTokenUtil.getRoleFromToken(token);
-                Collection<SimpleGrantedAuthority> authorities = Collections.singleton(
-                        new SimpleGrantedAuthority("ROLE_"+role.name())
-                );
-                UsernamePasswordAuthenticationToken auth = new UsernamePasswordAuthenticationToken(
-                        userId,
-                        null,
-                        authorities
-                );
-                SecurityContextHolder.getContext().setAuthentication(auth);
-            } else {
-                response.sendError(HttpServletResponse.SC_CONFLICT, "Invalid JWT");
-                return;
+        String JwtToken = null;
+        if (header != null && header.startsWith("Bearer ")) {
+            JwtToken = header.substring(7);
+        } else {
+            Cookie[] cookies = request.getCookies();
+            if (cookies != null) {
+                for (Cookie cookie : cookies) {
+                    if (cookie.getName().equals("jwt")) {
+                        JwtToken = cookie.getValue();
+                        System.out.println(JwtToken);
+                    }
+                }
             }
         }
+        if (JwtToken != null && jwtTokenUtil.validateToken(JwtToken)) {
+            String UserID = jwtTokenUtil.getIdFromToken(JwtToken);
+            Role role = jwtTokenUtil.getRoleFromToken(JwtToken);
+            Collection<SimpleGrantedAuthority> authorities = Collections.singleton(
+                    new SimpleGrantedAuthority("ROLE_" + role.name())
+            );
+            UsernamePasswordAuthenticationToken auth = new UsernamePasswordAuthenticationToken(
+                    UserID,
+                    null,
+                    authorities
+            );
+            SecurityContextHolder.getContext().setAuthentication(auth);
+        }
+//        else {
+//            response.sendError(HttpServletResponse.SC_CONFLICT, "Invalid JWT");
+//            return;
+//        }
         filterchain.doFilter(request, response);
+
     }
 }

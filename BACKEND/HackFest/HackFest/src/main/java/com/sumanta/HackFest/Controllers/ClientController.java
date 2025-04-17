@@ -4,7 +4,13 @@ import com.sumanta.HackFest.Entities.Client;
 import com.sumanta.HackFest.Entities.Supplier;
 import com.sumanta.HackFest.Services.ClientService;
 import com.sumanta.HackFest.Services.GstService;
+import com.sumanta.HackFest.Utils.CookieUtil;
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseCookie;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.web.bind.annotation.*;
@@ -34,10 +40,17 @@ public class ClientController {
     }
 
     @PostMapping("/Login")
-    public String Login(@RequestBody Client client) {
+    public ResponseEntity<String> Login(@RequestBody Client client, HttpServletResponse response) {
         String clientId = client.getClientId();
         String password = client.getPassword();
-        return clientService.SignIn(clientId, password);
+        String JwtToken = clientService.SignIn(clientId, password);
+        if("Invalid Credentials".equals(JwtToken)) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(JwtToken);
+        }
+        ResponseCookie cookie = CookieUtil.generateCookie(JwtToken);
+        response.addHeader(HttpHeaders.SET_COOKIE, cookie.toString());
+        //System.out.println(cookie);
+        return ResponseEntity.ok(JwtToken);
     }
 
     @GetMapping("/getAllSuppliers")

@@ -5,10 +5,10 @@
 Create a virtual environment, activate it, and install the required dependencies:
 
 ```bash
-python3 -m venv venv
-source venv/bin/activate  # For Linux/macOS
-venv\Scripts\activate     # For Windows
-pip3 install -r requirements.txt
+    python3 -m venv venv
+    source venv/bin/activate  # For Linux/macOS
+    venv\Scripts\activate     # For Windows
+    pip3 install -r requirements.txt
 ```
 
 ## Run the Project
@@ -16,13 +16,13 @@ pip3 install -r requirements.txt
 Start the application using Uvicorn:
 
 ```bash
-uvicorn app.main:app
+  uvicorn app.main:app
 ```
 
 To enable auto-reloading on file changes, run:
 
 ```bash
-uvicorn app.main:app --reload
+  uvicorn app.main:app --reload
 ```
 
 ## Update Dependencies
@@ -30,7 +30,7 @@ uvicorn app.main:app --reload
 After installing any new packages, update the `requirements.txt` file:
 
 ```bash
-pip freeze > requirements.txt
+  pip freeze > requirements.txt
 ```
 
 ## API Endpoint: 1. Deforestation Check

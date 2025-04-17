@@ -9,9 +9,10 @@ from app.constants import (
     CLOUD_MASK_THRESHOLD,
 )
 
-# Make sure Earth Engine is initialized
+#Make sure Earth Engine is initialized
 try:
-    ee.Initialize(project="ee-dogrig507")
+    ee.Authenticate()
+    ee.Initialize(project="hackfest-457014")
 except Exception as e:
     ee.Authenticate()
     ee.Initialize()
