@@ -1,0 +1,47 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environment
+venv/
+env/
+ENV/
+
+# VS Code settings
+.vscode/
+
+# Model and cache files
+*.pkl
+*.joblib
+*.log
+
+# OS-specific files
+.DS_Store
+Thumbs.db
+
+# Python virtualenv tools
+pip-wheel-metadata/
+*.egg-info/
+.eggs/
+
+# Jupyter Notebooks (if any)
+.ipynb_checkpoints/
+
+# Test output
+htmlcov/
+coverage.xml
+.cache
+.pytest_cache/
+
+# Environment variables / secret keys
+.env
+
+# Uvicorn logs or temp files
+*.pid
+*.db
+*.sqlite3
+
+# IDE folders
+.idea/
+
