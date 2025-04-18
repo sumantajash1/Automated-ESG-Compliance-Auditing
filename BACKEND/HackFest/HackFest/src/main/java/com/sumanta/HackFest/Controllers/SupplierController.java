@@ -1,11 +1,11 @@
 package com.sumanta.HackFest.Controllers;
 
+import com.sumanta.HackFest.DTO.ClientDto;
 import com.sumanta.HackFest.Entities.Client;
 import com.sumanta.HackFest.Entities.Supplier;
 import com.sumanta.HackFest.Services.GstService;
 import com.sumanta.HackFest.Services.SupplierService;
 import com.sumanta.HackFest.Utils.CookieUtil;
-import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseCookie;
@@ -14,6 +14,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -24,7 +25,6 @@ public class SupplierController {
     SupplierService supplierService;
     @Autowired
     GstService gstService;
-
 
     @PostMapping("/SignUp")
     public String SignUp(@RequestBody Supplier supplier) {
@@ -49,13 +49,24 @@ public class SupplierController {
         }
         ResponseCookie cookie = CookieUtil.generateCookie(jwtToken);
         response.setHeader("jwt", jwtToken);
-        return ResponseEntity.ok("Login Successful");
+        return ResponseEntity.ok(jwtToken);
+        //return ResponseEntity.ok("Login Successful");
     }
 
     @GetMapping("/getAllClients")
     @PreAuthorize("hasRole('SUPPLIER')")
-    public List<Client> getAllClients() {
-        return supplierService.getAllClients();
+    public List<ClientDto> getAllClients() {
+        List<Client> AllClients = supplierService.getAllClients();
+        List<ClientDto> result = new ArrayList<>();
+        for(Client client : AllClients) {
+            ClientDto dto = new ClientDto();
+            dto.setClientName(client.getclientName());
+            dto.setClientId(client.getClientId());
+            dto.setContact(client.getContactNumber());
+            dto.setEmail(client.getEmail());
+            result.add(dto);
+        }
+        return result;
     }
 
 }

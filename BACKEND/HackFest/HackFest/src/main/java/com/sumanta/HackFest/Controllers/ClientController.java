@@ -1,5 +1,6 @@
 package com.sumanta.HackFest.Controllers;
 
+import com.sumanta.HackFest.DTO.SupplierDto;
 import com.sumanta.HackFest.Entities.Client;
 import com.sumanta.HackFest.Entities.Supplier;
 import com.sumanta.HackFest.Services.ClientService;
@@ -15,6 +16,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -55,7 +57,18 @@ public class ClientController {
 
     @GetMapping("/getAllSuppliers")
     @PreAuthorize("hasRole('CLIENT')")
-    public List<Supplier> getAllMySuppliers() {
-        return clientService.getAllSuppliers();
+    public List<SupplierDto> getAllMySuppliers() {
+        List<Supplier> AllSuppliers = clientService.getAllSuppliers();
+        List<SupplierDto> result = new ArrayList<>();
+        for(Supplier supplier : AllSuppliers) {
+            SupplierDto dto = new SupplierDto(
+                    supplier.getGstNumber(),
+                    supplier.getSupplierName(),
+                    supplier.getEmail(),
+                    supplier.getContactNumber()
+            );
+            result.add(dto);
+        }
+        return result;
     }
 }

@@ -35,7 +35,7 @@ public class JwtRequestFilter extends OncePerRequestFilter {
                 for (Cookie cookie : cookies) {
                     if (cookie.getName().equals("jwt")) {
                         JwtToken = cookie.getValue();
-                        System.out.println(JwtToken);
+                        //System.out.println(JwtToken);
                     }
                 }
             }

@@ -1,5 +1,8 @@
 package com.sumanta.HackFest.Controllers;
 
+import com.sumanta.HackFest.DTO.ClientDto;
+import com.sumanta.HackFest.DTO.GovernmentDto;
+import com.sumanta.HackFest.DTO.SupplierDto;
 import com.sumanta.HackFest.Entities.Client;
 import com.sumanta.HackFest.Entities.Government;
 import com.sumanta.HackFest.Entities.Supplier;
@@ -14,6 +17,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -40,7 +44,8 @@ public class GovernmentController {
             } else {
                 ResponseCookie cookie = CookieUtil.generateCookie(JwtToken);
                 response.setHeader("jwt", JwtToken);
-                return ResponseEntity.ok("Logged In Successfully");
+                return ResponseEntity.ok(JwtToken);
+                //return ResponseEntity.ok("Logged In Successfully");
             }
         }
         return ResponseEntity.ok("Invalid Government Id");
@@ -48,13 +53,35 @@ public class GovernmentController {
 
     @GetMapping("/getAllSuppliers")
     @PreAuthorize("hasRole('GOVERNMENT')")
-    public List<Supplier> GetAllSuppliers() {
-        return govService.getAllSuppliers();
+    public List<SupplierDto> GetAllSuppliers() {
+        List<Supplier> AllSuppliers = govService.getAllSuppliers();
+        List<SupplierDto> result = new ArrayList<>();
+        for(Supplier supplier : AllSuppliers) {
+            SupplierDto dto = new SupplierDto(
+                    supplier.getGstNumber(),
+                    supplier.getSupplierName(),
+                    supplier.getEmail(),
+                    supplier.getContactNumber()
+            );
+            result.add(dto);
+        }
+        return result;
     }
 
     @GetMapping("/getAllClients")
     @PreAuthorize("hasRole('GOVERNMENT')")
-    public List<Client> getAllClients() {
-        return govService.getAllClients();
+    public List<ClientDto> getAllClients() {
+        List<Client> AllClients = govService.getAllClients();
+        List<ClientDto> result = new ArrayList<>();
+        for(Client client : AllClients) {
+            ClientDto dto = new ClientDto(
+                    client.getClientId(),
+                    client.getclientName(),
+                    client.getEmail(),
+                    client.getContactNumber()
+            );
+            result.add(dto);
+        }
+        return result;
     }
 }
