@@ -12,7 +12,7 @@ from app.constants import (
 #Make sure Earth Engine is initialized
 try:
     ee.Authenticate()
-    ee.Initialize(project="hackfest-457014")
+    ee.Initialize(project="ee-dogrig507")
 except Exception as e:
     ee.Authenticate()
     ee.Initialize()
@@ -101,7 +101,8 @@ def compute_deforestation(input: AreaInput, start_year, end_year) -> float:
                     "percentage_loss": percentage_loss,
                     "Initial_forest_area_m2": initial_forest_area_m2,
                     "area_lost_meter_square": area_lost_m2,
-                    "time_period": f"{year}-{year + 1}",
+                    "startYear": f"{year}",
+                    "endYear": f"{year + 1}",
                 }
             )
         )
