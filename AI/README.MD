@@ -2,6 +2,12 @@
 
 ## Set Up
 
+Go inside AI folder
+
+```bash
+    cd AI
+```
+
 Create a virtual environment, activate it, and install the required dependencies:
 
 ```bash
@@ -114,14 +120,16 @@ After making the request, the result will be sent to your specified `callback_ur
       "area_lost_meter_square": 2674.1388763726927,
       "deforestation_detected": true,
       "percentage_loss": 0.9125055759190629,
-      "time_period": "2021-2022"
+      "startYear": "2021",
+      "endYear": "2022"
     },
     {
       "Initial_forest_area_m2": 295371.1028354422,
       "area_lost_meter_square": 0,
       "deforestation_detected": false,
       "percentage_loss": 0,
-      "time_period": "2022-2023"
+      "startYear": "2022",
+      "endYear": "2023"
     }
   ]
 }
