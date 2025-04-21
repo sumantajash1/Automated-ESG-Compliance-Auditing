@@ -8,6 +8,7 @@ import com.sumanta.HackFest.Services.SupplierService;
 import com.sumanta.HackFest.Utils.CookieUtil;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseCookie;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -49,6 +50,7 @@ public class SupplierController {
         }
         ResponseCookie cookie = CookieUtil.generateCookie(jwtToken);
         response.setHeader("jwt", jwtToken);
+        response.addHeader(HttpHeaders.SET_COOKIE, cookie.toString());
         return ResponseEntity.ok(jwtToken);
         //return ResponseEntity.ok("Login Successful");
     }

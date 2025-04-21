@@ -44,7 +44,8 @@ public class SecurityConfig {
                                                     "/Supplier/SignUp",
                                                     "/Supplier/Login",
                                                     "/Government/Login",
-                                                    "/Government/SignUp"
+                                                    "/Government/SignUp",
+                                                    "/Supplier/deforestation/**"
                         ).permitAll()
                         .requestMatchers("/Client/**").hasRole("CLIENT")
                         .requestMatchers("/Government/**").hasRole("GOVERNMENT")
