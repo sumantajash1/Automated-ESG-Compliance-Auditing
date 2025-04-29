@@ -1,0 +1,31 @@
+/* Style for the + and - zoom buttons */
+.leaflet-control-zoom {
+  transform: scale(1.5); /* Increase the size of the zoom buttons */
+  margin-top: 100px; /* Adjust the position */
+	border: 0px !important;
+}
+
+.leaflet-control-zoom a {
+  width: 40px !important; /* Adjust button size */
+  height: 40px !important; /* Adjust button size */
+  line-height: 40px !important; /* Center the text */
+  font-size: 20px !important; /* Adjust font size */
+	border: 1px solid rgb(163, 163, 163) !important;
+}
+
+.leaflet-control-zoom a:first-child {
+	margin-top: 150px;
+}
+
+/* For map toolbar */
+.leaflet-container .leaflet-draw-toolbar {
+  transform: scale(1.4); /* Increase the size of the zoom buttons */
+  margin-top: 100px; /* Adjust the position */
+}
+
+.leaflet-container .leaflet-draw-toolbar a {
+  width: 40px !important; /* Adjust button size */
+  height: 40px !important; /* Adjust button size */
+  line-height: 40px !important; /* Center the text */
+  font-size: 20px !important; /* Adjust font size */
+}
