@@ -1,10 +1,7 @@
 package com.sumanta.HackFest.Controllers;
 
 import com.sumanta.HackFest.DTO.ResponseWrapper;
-import com.sumanta.HackFest.Exception.ClientNotFoundException;
-import com.sumanta.HackFest.Exception.CompanyAlreadyExistsException;
-import com.sumanta.HackFest.Exception.CompanyNotFoundException;
-import com.sumanta.HackFest.Exception.GovernmentNotFoundException;
+import com.sumanta.HackFest.Exception.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -73,7 +70,20 @@ public class GlobalExceptionHandler {
         );
     }
 
-    // TO DO :: method for handling ClientAlreadyExistsException
+    @ExceptionHandler(ClientAlreadyExistsException.class)
+    public ResponseEntity<ResponseWrapper<Void>> handleClientAlreadyExistsException(ClientAlreadyExistsException exception) {
+        exception.printStackTrace();
+        return new ResponseEntity<>(
+                new ResponseWrapper<>(
+                        false,
+                        409,
+                        "Similar Credential",
+                        null,
+                        exception.getMessage()
+                ),
+                HttpStatus.CONFLICT
+        );
+    }
 
     @ExceptionHandler(GovernmentNotFoundException.class)
     public ResponseEntity<ResponseWrapper<Void>> handleGovernmentNotFoundException(GovernmentNotFoundException exception) {
