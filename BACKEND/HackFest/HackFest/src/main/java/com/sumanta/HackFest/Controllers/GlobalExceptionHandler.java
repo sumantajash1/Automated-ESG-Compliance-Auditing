@@ -1,6 +1,6 @@
 package com.sumanta.HackFest.Controllers;
 
-import com.sumanta.HackFest.DTO.ResponseWrapper;
+import com.sumanta.HackFest.DTO.ApiResponse;
 import com.sumanta.HackFest.Exception.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -11,10 +11,10 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 public class GlobalExceptionHandler {
 
     @ExceptionHandler(Exception.class)
-    public ResponseEntity<ResponseWrapper<Void>> handleGenericExceptions(Exception exception) {
+    public ResponseEntity<ApiResponse<Void>> handleGenericExceptions(Exception exception) {
         exception.printStackTrace();
         return new ResponseEntity<>(
-                new ResponseWrapper<>(
+                new ApiResponse<>(
                         false,
                         500,
                         "Internal Server Error",
@@ -26,10 +26,10 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(ClientNotFoundException.class)
-    public ResponseEntity<ResponseWrapper<Void>> handleClientNotFoundException(ClientNotFoundException exception) {
+    public ResponseEntity<ApiResponse<Void>> handleClientNotFoundException(ClientNotFoundException exception) {
         exception.printStackTrace();
         return new ResponseEntity<>(
-                new ResponseWrapper<>(
+                new ApiResponse<>(
                         false,
                         404,
                         "User Not Found.",
@@ -41,10 +41,10 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(CompanyNotFoundException.class)
-    public ResponseEntity<ResponseWrapper<Void>> handleCompanyNotFound(CompanyNotFoundException exception) {
+    public ResponseEntity<ApiResponse<Void>> handleCompanyNotFound(CompanyNotFoundException exception) {
         exception.printStackTrace();
         return new ResponseEntity<>(
-                new ResponseWrapper<>(
+                new ApiResponse<>(
                         false,
                         404,
                         "User Not Found.",
@@ -56,10 +56,10 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(CompanyAlreadyExistsException.class)
-    public ResponseEntity<ResponseWrapper<Void>> handleCompanyAlreadyExistsException(CompanyAlreadyExistsException exception) {
+    public ResponseEntity<ApiResponse<Void>> handleCompanyAlreadyExistsException(CompanyAlreadyExistsException exception) {
         exception.printStackTrace();
         return new ResponseEntity<>(
-                new ResponseWrapper<>(
+                new ApiResponse<>(
                         false,
                         409,
                         "Similar credential",
@@ -71,10 +71,10 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(ClientAlreadyExistsException.class)
-    public ResponseEntity<ResponseWrapper<Void>> handleClientAlreadyExistsException(ClientAlreadyExistsException exception) {
+    public ResponseEntity<ApiResponse<Void>> handleClientAlreadyExistsException(ClientAlreadyExistsException exception) {
         exception.printStackTrace();
         return new ResponseEntity<>(
-                new ResponseWrapper<>(
+                new ApiResponse<>(
                         false,
                         409,
                         "Similar Credential",
@@ -86,10 +86,10 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(GovernmentNotFoundException.class)
-    public ResponseEntity<ResponseWrapper<Void>> handleGovernmentNotFoundException(GovernmentNotFoundException exception) {
+    public ResponseEntity<ApiResponse<Void>> handleGovernmentNotFoundException(GovernmentNotFoundException exception) {
         exception.printStackTrace();
         return new ResponseEntity<>(
-                new ResponseWrapper<>(
+                new ApiResponse<>(
                         false,
                         404,
                         "User Not Found.",

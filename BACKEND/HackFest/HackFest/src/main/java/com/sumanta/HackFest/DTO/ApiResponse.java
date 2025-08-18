@@ -9,7 +9,7 @@ import lombok.ToString;
 @NoArgsConstructor
 @Data
 @ToString
-public class ResponseWrapper<T> {
+public class ApiResponse<T> {
     boolean success;
     int httpStatusCode;
     String message;
