@@ -26,7 +26,7 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(SupplierNotFoundException.class)
-    public ResponseEntity<ApiResponse<Void>> handleClientNotFoundException(SupplierNotFoundException exception) {
+    public ResponseEntity<ApiResponse<Void>> handleSupplierNotFoundException(SupplierNotFoundException exception) {
         exception.printStackTrace();
         return new ResponseEntity<>(
                 new ApiResponse<>(
@@ -56,7 +56,7 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(SupplierAlreadyExistsException.class)
-    public ResponseEntity<ApiResponse<Void>> handleCompanyAlreadyExistsException(SupplierAlreadyExistsException exception) {
+    public ResponseEntity<ApiResponse<Void>> handleSupplierAlreadyExistsException(SupplierAlreadyExistsException exception) {
         exception.printStackTrace();
         return new ResponseEntity<>(
                 new ApiResponse<>(
