@@ -21,7 +21,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RestController
-@RequestMapping("/Government")
+@RequestMapping("/government")
 @EnableMethodSecurity
 public class GovernmentController {
     @Autowired
@@ -29,12 +29,12 @@ public class GovernmentController {
 //    @Autowired
 //    CookieUtil cookieUtil;
 
-    @PostMapping("/SignUp")
+    @PostMapping("/sign-up")
     public String SignUp(@RequestBody Government government) {
         return govService.register(government);
     }
 
-    @PostMapping("/Login")
+    @PostMapping("/log-in")
     public ResponseEntity<String> Login(@RequestBody Government government, HttpServletResponse response) {
         String govId = government.getEmployeeId();
         if(govService.isValidId(govId)) {
@@ -51,7 +51,7 @@ public class GovernmentController {
         return ResponseEntity.ok("Invalid Government Id");
     }
 
-    @GetMapping("/getAllSuppliers")
+    @GetMapping("/get-all-suppliers")
     @PreAuthorize("hasRole('GOVERNMENT')")
     public List<SupplierDto> GetAllSuppliers() {
         List<Supplier> AllSuppliers = govService.getAllSuppliers();
@@ -68,7 +68,7 @@ public class GovernmentController {
         return result;
     }
 
-    @GetMapping("/getAllClients")
+    @GetMapping("/get-all-clients")
     @PreAuthorize("hasRole('GOVERNMENT')")
     public List<ClientDto> getAllClients() {
         List<Client> AllClients = govService.getAllClients();

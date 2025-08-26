@@ -20,14 +20,14 @@ import java.util.List;
 
 @RestController
 @EnableMethodSecurity
-@RequestMapping("/Supplier")
+@RequestMapping("/supplier")
 public class SupplierController {
     @Autowired
     SupplierService supplierService;
     @Autowired
     GstService gstService;
 
-    @PostMapping("/SignUp")
+    @PostMapping("/sign-up")
     public String SignUp(@RequestBody Supplier supplier) {
         String gstNumber = supplier.getGstNumber();
         if(gstService.VerifyGstNumber(gstNumber)) {
@@ -39,7 +39,7 @@ public class SupplierController {
         return "idk";
     }
 
-    @PostMapping("Login")
+    @PostMapping("log-in")
     public ResponseEntity<String> Login(@RequestBody Supplier supplier, HttpServletResponse response) {
         if(!gstService.VerifyGstNumber(supplier.getGstNumber())) {
             ResponseEntity.ok("Invalid Gst Number");
@@ -55,7 +55,7 @@ public class SupplierController {
         //return ResponseEntity.ok("Login Successful");
     }
 
-    @GetMapping("/getAllClients")
+    @GetMapping("/get-all-clients")
     @PreAuthorize("hasRole('SUPPLIER')")
     public List<ClientDto> getAllClients() {
         List<Client> AllClients = supplierService.getAllClients();

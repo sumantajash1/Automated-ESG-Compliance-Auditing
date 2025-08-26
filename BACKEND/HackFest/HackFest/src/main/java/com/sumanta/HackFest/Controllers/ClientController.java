@@ -20,7 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RestController
-@RequestMapping("/Client")
+@RequestMapping("/client")
 @EnableMethodSecurity
 public class ClientController {
     @Autowired
@@ -28,7 +28,7 @@ public class ClientController {
     @Autowired
     GstService gstService;
 
-    @PostMapping("/SignUp")
+    @PostMapping("/sign-up")
     public String SignUp(@RequestBody Client client) {
         String gstNumber = client.getGstNumber();
         if(gstService.VerifyGstNumber(gstNumber)) {
@@ -41,7 +41,7 @@ public class ClientController {
         return "Invalid Gst Number";
     }
 
-    @PostMapping("/Login")
+    @PostMapping("/log-in")
     public ResponseEntity<String> Login(@RequestBody Client client, HttpServletResponse response) {
         String clientId = client.getClientId();
         String password = client.getPassword();
@@ -55,7 +55,7 @@ public class ClientController {
         return ResponseEntity.ok(JwtToken);
     }
 
-    @GetMapping("/getAllSuppliers")
+    @GetMapping("/get-all-supplier")
     @PreAuthorize("hasRole('CLIENT')")
     public List<SupplierDto> getAllMySuppliers() {
         List<Supplier> AllSuppliers = clientService.getAllSuppliers();

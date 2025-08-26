@@ -14,7 +14,7 @@ import java.util.List;
 
 @RestController
 @EnableMethodSecurity
-@RequestMapping("/Supplier/deforestation")
+@RequestMapping("/supplier/deforestation")
 public class deforestationController {
 
     @Autowired
