@@ -28,7 +28,7 @@ public class SupplierController {
     GstService gstService;
 
     @PostMapping("/sign-up")
-    public String SignUp(@RequestBody Supplier supplier) {
+    public String signUp(@RequestBody Supplier supplier) {
         String gstNumber = supplier.getGstNumber();
         if(gstService.VerifyGstNumber(gstNumber)) {
             if(supplierService.alreadyExists(gstNumber)) {
@@ -40,7 +40,7 @@ public class SupplierController {
     }
 
     @PostMapping("log-in")
-    public ResponseEntity<String> Login(@RequestBody Supplier supplier, HttpServletResponse response) {
+    public ResponseEntity<String> logIn(@RequestBody Supplier supplier, HttpServletResponse response) {
         if(!gstService.VerifyGstNumber(supplier.getGstNumber())) {
             ResponseEntity.ok("Invalid Gst Number");
         }

@@ -30,12 +30,12 @@ public class GovernmentController {
 //    CookieUtil cookieUtil;
 
     @PostMapping("/sign-up")
-    public String SignUp(@RequestBody Government government) {
+    public String signUp(@RequestBody Government government) {
         return govService.register(government);
     }
 
     @PostMapping("/log-in")
-    public ResponseEntity<String> Login(@RequestBody Government government, HttpServletResponse response) {
+    public ResponseEntity<String> logIn(@RequestBody Government government, HttpServletResponse response) {
         String govId = government.getEmployeeId();
         if(govService.isValidId(govId)) {
             String JwtToken = govService.SignIn(government);
@@ -53,7 +53,7 @@ public class GovernmentController {
 
     @GetMapping("/get-all-suppliers")
     @PreAuthorize("hasRole('GOVERNMENT')")
-    public List<SupplierDto> GetAllSuppliers() {
+    public List<SupplierDto> getAllSuppliers() {
         List<Supplier> AllSuppliers = govService.getAllSuppliers();
         List<SupplierDto> result = new ArrayList<>();
         for(Supplier supplier : AllSuppliers) {

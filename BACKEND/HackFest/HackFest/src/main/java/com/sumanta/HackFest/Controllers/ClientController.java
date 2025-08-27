@@ -29,7 +29,7 @@ public class ClientController {
     GstService gstService;
 
     @PostMapping("/sign-up")
-    public String SignUp(@RequestBody Client client) {
+    public String signUp(@RequestBody Client client) {
         String gstNumber = client.getGstNumber();
         if(gstService.VerifyGstNumber(gstNumber)) {
             if(clientService.AlreadyExists(gstNumber)) {
@@ -42,7 +42,7 @@ public class ClientController {
     }
 
     @PostMapping("/log-in")
-    public ResponseEntity<String> Login(@RequestBody Client client, HttpServletResponse response) {
+    public ResponseEntity<String> logIn(@RequestBody Client client, HttpServletResponse response) {
         String clientId = client.getClientId();
         String password = client.getPassword();
         String JwtToken = clientService.SignIn(clientId, password);
