@@ -1,11 +1,14 @@
 package com.sumanta.HackFest.Controllers;
 
+import com.sumanta.HackFest.DTO.ApiResponse;
+import com.sumanta.HackFest.DTO.AuthResponseDto;
 import com.sumanta.HackFest.DTO.SupplierDto;
 import com.sumanta.HackFest.Entities.Client;
 import com.sumanta.HackFest.Entities.Supplier;
 import com.sumanta.HackFest.Services.ClientService;
 import com.sumanta.HackFest.Services.GstService;
 import com.sumanta.HackFest.Utils.CookieUtil;
+import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -29,16 +32,14 @@ public class ClientController {
     GstService gstService;
 
     @PostMapping("/sign-up")
-    public String signUp(@RequestBody Client client) {
-        String gstNumber = client.getGstNumber();
-        if(gstService.VerifyGstNumber(gstNumber)) {
-            if(clientService.AlreadyExists(gstNumber)) {
-                return "Client Already Registered";
-            } else {
-                return clientService.register(client);
-            }
+    public ResponseEntity<ApiResponse<AuthResponseDto>> signUp(@RequestBody Client client, HttpServletResponse response) {
+        ApiResponse<AuthResponseDto> serviceResponse = clientService.register(client);
+        if(serviceResponse.isSuccess()) {
+            String jwtToken = serviceResponse.getData().getJwtToken();
+            response.setHeader("jwtToken", jwtToken);
+            response.setHeader(HttpHeaders.SET_COOKIE, CookieUtil.generateCookie(jwtToken).toString());
         }
-        return "Invalid Gst Number";
+        return new ResponseEntity<>(serviceResponse, HttpStatus.CREATED);
     }
 
     @PostMapping("/log-in")
