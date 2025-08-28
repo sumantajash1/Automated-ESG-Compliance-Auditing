@@ -2,7 +2,7 @@ package com.sumanta.HackFest.DTO;
 
 import org.springframework.stereotype.Component;
 
-@Component
+@Data
 public class ClientDto {
     private String clientId;
     private String clientName;
