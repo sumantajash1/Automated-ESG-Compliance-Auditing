@@ -43,17 +43,13 @@ public class ClientController {
     }
 
     @PostMapping("/log-in")
-    public ResponseEntity<String> logIn(@RequestBody Client client, HttpServletResponse response) {
-        String clientId = client.getClientId();
-        String password = client.getPassword();
-        String JwtToken = clientService.SignIn(clientId, password);
-        if("Invalid Credentials".equals(JwtToken)) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(JwtToken);
+    public ResponseEntity<ApiResponse<AuthResponseDto>> logIn(@RequestBody Client client, HttpServletResponse response) {
+        ApiResponse<AuthResponseDto> serviceResponse = clientService.signIn(client);
+        if(serviceResponse.isSuccess())  {
+            String jwtToken = serviceResponse.getData().getJwtToken();
+            response.setHeader(HttpHeaders.SET_COOKIE, CookieUtil.generateCookie(jwtToken).toString());
         }
-        ResponseCookie cookie = CookieUtil.generateCookie(JwtToken);
-        response.addHeader(HttpHeaders.SET_COOKIE, cookie.toString());
-        //System.out.println(cookie);
-        return ResponseEntity.ok(JwtToken);
+        return new ResponseEntity<>(serviceResponse, HttpStatus.OK);
     }
 
     @GetMapping("/get-all-supplier")

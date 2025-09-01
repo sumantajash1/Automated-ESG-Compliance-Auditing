@@ -33,7 +33,7 @@ public class ClientService {
         return "Saved Successfully";
     }
 
-    public String SignIn(String clientId, String rawPassword) {
+    public String signIn(String clientId, String rawPassword) {
         var existing = clientDao.getByClientId(clientId);
         if(existing.isPresent()) {
             String encodedPassword = existing.get().getPassword();
