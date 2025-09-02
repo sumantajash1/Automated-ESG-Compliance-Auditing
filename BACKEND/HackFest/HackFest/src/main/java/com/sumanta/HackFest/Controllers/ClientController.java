@@ -7,6 +7,7 @@ import com.sumanta.HackFest.Entities.Client;
 import com.sumanta.HackFest.Entities.Supplier;
 import com.sumanta.HackFest.Services.ClientService;
 import com.sumanta.HackFest.Services.GstService;
+import com.sumanta.HackFest.Services.SupplierService;
 import com.sumanta.HackFest.Utils.CookieUtil;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletResponse;
@@ -28,6 +29,8 @@ import java.util.List;
 public class ClientController {
     @Autowired
     ClientService clientService;
+    @Autowired
+    SupplierService supplierService;
     @Autowired
     GstService gstService;
 
@@ -54,18 +57,8 @@ public class ClientController {
 
     @GetMapping("/get-all-supplier")
     @PreAuthorize("hasRole('CLIENT')")
-    public List<SupplierDto> getAllMySuppliers() {
-        List<Supplier> AllSuppliers = clientService.getAllSuppliers();
-        List<SupplierDto> result = new ArrayList<>();
-        for(Supplier supplier : AllSuppliers) {
-            SupplierDto dto = new SupplierDto(
-                    supplier.getGstNumber(),
-                    supplier.getSupplierName(),
-                    supplier.getEmail(),
-                    supplier.getContactNumber()
-            );
-            result.add(dto);
-        }
-        return result;
+    public ResponseEntity<ApiResponse<List<SupplierDto>>> getAllMySuppliers() {
+        ApiResponse<List<SupplierDto>> serviceResponse = supplierService.getAllSuppliers();
+        return new ResponseEntity<>(serviceResponse, HttpStatus.OK);
     }
 }
