@@ -13,4 +13,12 @@ public interface ClientDao extends JpaRepository<Client, String> {
     public Optional<Client> getByClientId(String ClientId);
 
     public boolean existsByGstNumber(String gstNumber);
+
+    boolean existsByClientId(String clientId);
+
+    boolean existsByClientName(String s);
+
+    boolean existsByContactNumber(String contactNumber);
+
+    boolean existsByEmail(String email);
 }

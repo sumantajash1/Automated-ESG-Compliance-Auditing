@@ -1,8 +1,11 @@
 package com.sumanta.HackFest.Services;
 
+import com.sumanta.HackFest.DTO.ApiResponse;
+import com.sumanta.HackFest.DTO.AuthResponseDto;
 import com.sumanta.HackFest.Entities.Client;
 import com.sumanta.HackFest.Entities.Role;
 import com.sumanta.HackFest.Entities.Supplier;
+import com.sumanta.HackFest.Exception.ClientAlreadyExistsException;
 import com.sumanta.HackFest.Repositories.ClientDao;
 import com.sumanta.HackFest.Repositories.SupplierDao;
 import com.sumanta.HackFest.Utils.JwtTokenUtil;
@@ -25,12 +28,30 @@ public class ClientService {
     @Autowired
     JwtTokenUtil jwtTokenUtil;
 
-    public String register(Client client) {
-        //System.out.println(client);
+    public ApiResponse<AuthResponseDto> register(Client client) {
+        // TO DO : in client class, remove all the constructors and getter, setters, with lombok annotations
         client.setPassword(passwordEncoder.encode(client.getPassword()));
         client.setClientId(GenerateClientId());
         clientDao.save(client);
         return "Saved Successfully";
+    }
+
+    private void checkIfAlreadyExists(Client client) {
+        if(clientDao.existsByClientId(client.getClientId())) {
+            throw new ClientAlreadyExistsException("client Id");
+        }
+        if(clientDao.existsByGstNumber(client.getGstNumber())) {
+            throw new ClientAlreadyExistsException("Gst Number");
+        }
+        if(clientDao.existsByClientName(client.getclientName())) {
+            throw new ClientAlreadyExistsException("Company name");
+        }
+        if(clientDao.existsByContactNumber(client.getContactNumber())) {
+            throw new ClientAlreadyExistsException("Contact Number");
+        }
+        if(clientDao.existsByEmail(client.getEmail())) {
+            throw new ClientAlreadyExistsException("Email Id");
+        }
     }
 
     public String signIn(String clientId, String rawPassword) {
