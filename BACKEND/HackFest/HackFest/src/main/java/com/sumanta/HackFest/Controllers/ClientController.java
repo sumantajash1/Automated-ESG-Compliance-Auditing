@@ -2,6 +2,7 @@ package com.sumanta.HackFest.Controllers;
 
 import com.sumanta.HackFest.DTO.ApiResponse;
 import com.sumanta.HackFest.DTO.AuthResponseDto;
+import com.sumanta.HackFest.DTO.ClientDto;
 import com.sumanta.HackFest.DTO.SupplierDto;
 import com.sumanta.HackFest.Entities.Client;
 import com.sumanta.HackFest.Entities.Supplier;

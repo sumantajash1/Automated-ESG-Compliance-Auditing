@@ -2,6 +2,7 @@ package com.sumanta.HackFest.Services;
 
 import com.sumanta.HackFest.DTO.ApiResponse;
 import com.sumanta.HackFest.DTO.AuthResponseDto;
+import com.sumanta.HackFest.DTO.ClientDto;
 import com.sumanta.HackFest.Entities.Client;
 import com.sumanta.HackFest.Entities.Role;
 import com.sumanta.HackFest.Entities.Supplier;
@@ -33,7 +34,11 @@ public class ClientService {
         client.setPassword(passwordEncoder.encode(client.getPassword()));
         client.setClientId(GenerateClientId());
         clientDao.save(client);
-        return "Saved Successfully";
+        AuthResponseDto authResponseDto = new AuthResponseDto(
+                client.getClientName(),
+                jwtTokenUtil.GenerateToken(client.getClientId(), Role.CLIENT)
+        );
+        return ApiResponse.ok(authResponseDto, "Sign-up successful");
     }
 
     private void checkIfAlreadyExists(Client client) {
