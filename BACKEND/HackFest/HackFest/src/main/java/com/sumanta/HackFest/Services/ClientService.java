@@ -3,6 +3,7 @@ package com.sumanta.HackFest.Services;
 import com.sumanta.HackFest.DTO.ApiResponse;
 import com.sumanta.HackFest.DTO.AuthResponseDto;
 import com.sumanta.HackFest.DTO.ClientDto;
+import com.sumanta.HackFest.DTO.SignInRequestDto;
 import com.sumanta.HackFest.Entities.Client;
 import com.sumanta.HackFest.Entities.Role;
 import com.sumanta.HackFest.Entities.Supplier;
@@ -30,7 +31,6 @@ public class ClientService {
     JwtTokenUtil jwtTokenUtil;
 
     public ApiResponse<AuthResponseDto> register(Client client) {
-        // TO DO : in client class, remove all the constructors and getter, setters, with lombok annotations
         client.setPassword(passwordEncoder.encode(client.getPassword()));
         client.setClientId(GenerateClientId());
         clientDao.save(client);
@@ -48,7 +48,7 @@ public class ClientService {
         if(clientDao.existsByGstNumber(client.getGstNumber())) {
             throw new ClientAlreadyExistsException("Gst Number");
         }
-        if(clientDao.existsByClientName(client.getclientName())) {
+        if(clientDao.existsByClientName(client.getClientName())) {
             throw new ClientAlreadyExistsException("Company name");
         }
         if(clientDao.existsByContactNumber(client.getContactNumber())) {
@@ -59,13 +59,14 @@ public class ClientService {
         }
     }
 
-    public String signIn(String clientId, String rawPassword) {
-        var existing = clientDao.getByClientId(clientId);
+    public ApiResponse<AuthResponseDto> signIn(SignInRequestDto signInRequestDto) {
+        var existing = clientDao.getByClientId(signInRequestDto.getId());
         if(existing.isPresent()) {
             String encodedPassword = existing.get().getPassword();
-            if(passwordEncoder.matches(rawPassword, encodedPassword)) {
+            if(passwordEncoder.matches(signInRequestDto.getPassword(), encodedPassword)) {
                 Role role = existing.get().getRole();
-                return jwtTokenUtil.GenerateToken(clientId, role);
+                return jwtTokenUtil.GenerateToken(signInRequestDto.getId(), role);
+                // TO DO : create proper return method for this
             }
         }
         return "Invalid Credentials";

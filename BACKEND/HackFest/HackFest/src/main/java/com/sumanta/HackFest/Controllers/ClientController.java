@@ -1,9 +1,6 @@
 package com.sumanta.HackFest.Controllers;
 
-import com.sumanta.HackFest.DTO.ApiResponse;
-import com.sumanta.HackFest.DTO.AuthResponseDto;
-import com.sumanta.HackFest.DTO.ClientDto;
-import com.sumanta.HackFest.DTO.SupplierDto;
+import com.sumanta.HackFest.DTO.*;
 import com.sumanta.HackFest.Entities.Client;
 import com.sumanta.HackFest.Entities.Supplier;
 import com.sumanta.HackFest.Services.ClientService;
@@ -47,8 +44,8 @@ public class ClientController {
     }
 
     @PostMapping("/log-in")
-    public ResponseEntity<ApiResponse<AuthResponseDto>> logIn(@RequestBody Client client, HttpServletResponse response) {
-        ApiResponse<AuthResponseDto> serviceResponse = clientService.signIn(client);
+    public ResponseEntity<ApiResponse<AuthResponseDto>> logIn(@RequestBody SignInRequestDto signInRequestDto, HttpServletResponse response) {
+        ApiResponse<AuthResponseDto> serviceResponse = clientService.signIn(signInRequestDto);
         if(serviceResponse.isSuccess())  {
             String jwtToken = serviceResponse.getData().getJwtToken();
             response.setHeader(HttpHeaders.SET_COOKIE, CookieUtil.generateCookie(jwtToken).toString());
